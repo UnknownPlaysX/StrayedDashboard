@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strayed VR Scrap Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e293b, #3b82f6);
+            color: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #334155;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .input-group input:focus {
+            box-shadow: 0 0 5px #3b82f6;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            background: #3b82f6;
+            color: #f1f5f9;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .button-container button:hover {
+            background: #2563eb;
+        }
+        .error-message {
+            text-align: center;
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+        }
+        .totals {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scrap Calculator</h1>
+        <div class="input-group">
+            <label for="weapon-part">Weapon Part</label>
+            <input type="text" id="weapon-part" name="weapon-part" placeholder="Enter amount of Weapon Parts">
+        </div>
+        <div class="input-group">
+            <label for="metal-plate">Metal Plate</label>
+            <input type="text" id="metal-plate" name="metal-plate" placeholder="Enter amount of Metal Plates">
+        </div>
+        <div class="input-group">
+            <label for="pipe">Pipe</label>
+            <input type="text" id="pipe" name="pipe" placeholder="Enter amount of Pipes">
+        </div>
+        <div class="input-group">
+            <label for="spring">Spring</label>
+            <input type="text" id="spring" name="spring" placeholder="Enter amount of Springs">
+        </div>
+        <div class="input-group">
+            <label for="nuts-bolts">Nuts And Bolts</label>
+            <input type="text" id="nuts-bolts" name="nuts-bolts" placeholder="Enter amount of Nuts And Bolts">
+        </div>
+        <div class="button-container">
+            <button id="calculate">Calculate</button>
+        </div>
+        <div class="error-message" id="error-message">Invalid input. Please enter valid numeric values.</div>
+        
+        <div class="totals" id="totals">
+            <p>Scrap: 0</p>
+            <p>Metal Fragments: 0</p>
+        </div>
+    </div>
+
+    <script>
+        function processWeaponPart(value) {
+            const scrap = 30 * value;
+            const metal_frags = 45 * value;
+            return { scrap, metal_frags };
+        }
+
+        function processMetalPlate(value) {
+            const scrap = 5 * value;
+            const metal_frags = 75 * value;
+            return { scrap, metal_frags };
+        }
+
+        function processPipe(value) {
+            const scrap = 5 * value;
+            const metal_frags = 15 * value;
+            return { scrap, metal_frags };
+        }
+
+        function processSpring(value) {
+            const scrap = 15 * value;
+            const metal_frags = 15 * value;
+            return { scrap, metal_frags };
+        }
+
+        function processNutsAndBolts(value) {
+            const scrap = 5 * value;
+            const metal_frags = 10 * value;
+            return { scrap, metal_frags };
+        }
+
+        function processInputs(values) {
+            let totalScrap = 0;
+            let totalMetalFrags = 0;
+
+            const results = [
+                processWeaponPart(values.weaponPart),
+                processMetalPlate(values.metalPlate),
+                processPipe(values.pipe),
+                processSpring(values.spring),
+                processNutsAndBolts(values.nutsAndBolts)
+            ];
+
+            results.forEach(result => {
+                totalScrap += result.scrap;
+                totalMetalFrags += result.metal_frags;
+            });
+
+            return { totalScrap, totalMetalFrags };
+        }
+
+        function displayTotals(scrap, metalFrags) {
+            const totalsElement = document.getElementById('totals');
+            totalsElement.innerHTML = `
+                <p>Scrap: ${scrap}</p>
+                <p>Metal Fragments: ${metalFrags}</p>
+            `;
+        }
+
+        document.getElementById('calculate').addEventListener('click', function() {
+            const inputs = {
+                weaponPart: document.getElementById('weapon-part').value.trim(),
+                metalPlate: document.getElementById('metal-plate').value.trim(),
+                pipe: document.getElementById('pipe').value.trim(),
+                spring: document.getElementById('spring').value.trim(),
+                nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
+            };
+
+            const errorMessage = document.getElementById('error-message');
+            let isValid = true;
+
+            // Check if all inputs are valid (numeric and non-empty)
+            Object.values(inputs).forEach(value => {
+                if (value === "" || isNaN(value) || Number(value) < 0) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+                
+                // Convert input values to numbers
+                const numericValues = {
+                    weaponPart: Number(inputs.weaponPart),
+                    metalPlate: Number(inputs.metalPlate),
+                    pipe: Number(inputs.pipe),
+                    spring: Number(inputs.spring),
+                    nutsAndBolts: Number(inputs.nutsAndBolts)
+                };
+
+                const { totalScrap, totalMetalFrags } = processInputs(numericValues);
+                displayTotals(totalScrap, totalMetalFrags);
+            }
+        });
+    </script>
+</body>
+</html>
