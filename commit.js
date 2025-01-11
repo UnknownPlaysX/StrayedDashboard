@@ -25,7 +25,7 @@ function runCommand(command, successMessage) {
 program
   .command('commit')
   .description('Commit changes to the site repository')
-  .option('-m, --message <message>', 'Commit message')
+  .option('-m, --m <message>', 'Commit message')
   .action((options) => {
     const commitMessage = options.message || 'Updated site';
     runCommand('git add .', 'Added all changes.');
