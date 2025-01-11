@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Zodiac Dashboard</title>
+  <title>Strayed Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!----======== CSS ======== -->
@@ -56,20 +56,6 @@
 </head>
 
 <body>
-
-  <div class="settings-overlay" onClick="closeSettings()"></div>
-
-  <div class="settings-popup">
-    <button class="settings-close" onClick="closeSettings()">&times;</button>
-    <div class="settings-popup-content">
-      <h2>Settings</h2>
-      <p>This is currently a work in progress</p>
-      <button class="settings-button" onClick="">Button 1</button>
-      <input type="text" id="codeInput" class="settings-input" placeholder="Enter code here..." autocomplete="off">
-      <button class="settings-button" onClick="runCode()">Run Code</button>
-    </div>
-  </div>
-
   <nav class="sidebar close">
     <header>
       <div class="image-text">
@@ -106,13 +92,7 @@
           <li class="nav-link">
             <a onClick="changeFrame('browser.html')">
               <i class='bx bx-home-alt icon'>🌐</i>
-              <span class="text nav-text">Zodiac Web</span>
-            </a>
-          </li>
-          <li class="nav-link">
-            <a onClick="changeFrame('/GameSite/games.html')">
-              <i class='bx bx-home-alt icon'>🎮</i>
-              <span class="text nav-text">Zodiac Games</span>
+              <span class="text nav-text">Scrap Calculator</span>
             </a>
           </li>
         </ul>
@@ -120,13 +100,6 @@
       </div>
 
       <div class="bottom-content">
-
-        <li class="nav-link">
-          <a onClick="openSettings()">
-            <i class='bx bx-home-alt icon'>⚙️</i>
-            <span class="text nav-text">Settings(WIP)</span>
-          </a>
-        </li>
 
         <li class="mode">
           <div class="sun-moon">
@@ -146,8 +119,7 @@
   </nav>
 
   <section class="home">
-    <div class="text">Zodiac Dashboard</div>
-    <z class="boxedthing">Here is a shortened url to quickly access the site https://tinyurl.com/4nvrvfpt</z>
+    <div class="text">Strayed Dashboard</div>
   </section>
 
   <div id="iframeContainer">
