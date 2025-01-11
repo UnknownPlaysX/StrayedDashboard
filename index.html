@@ -172,42 +172,42 @@
         }
 
         document.getElementById('calculate').addEventListener('click', function() {
-            const inputs = {
-                weaponPart: document.getElementById('weapon-part').value.trim(),
-                metalPlate: document.getElementById('metal-plate').value.trim(),
-                pipe: document.getElementById('pipe').value.trim(),
-                spring: document.getElementById('spring').value.trim(),
-                nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
-            };
+        const inputs = {
+            weaponPart: document.getElementById('weapon-part').value.trim(),
+            metalPlate: document.getElementById('metal-plate').value.trim(),
+            pipe: document.getElementById('pipe').value.trim(),
+            spring: document.getElementById('spring').value.trim(),
+            nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
+        };
 
-            const errorMessage = document.getElementById('error-message');
-            let isValid = true;
+        const errorMessage = document.getElementById('error-message');
 
-            // Check if all inputs are valid (numeric and non-empty)
-            Object.values(inputs).forEach(value => {
-                if (value === "" || isNaN(value) || Number(value) < 0) {
-                    isValid = false;
-                }
-            });
+        // Convert empty inputs to 0 and check for invalid values
+        const numericValues = {
+            weaponPart: inputs.weaponPart === "" ? 0 : Number(inputs.weaponPart),
+            metalPlate: inputs.metalPlate === "" ? 0 : Number(inputs.metalPlate),
+            pipe: inputs.pipe === "" ? 0 : Number(inputs.pipe),
+            spring: inputs.spring === "" ? 0 : Number(inputs.spring),
+            nutsAndBolts: inputs.nutsAndBolts === "" ? 0 : Number(inputs.nutsAndBolts)
+        };
 
-            if (!isValid) {
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
-                
-                // Convert input values to numbers
-                const numericValues = {
-                    weaponPart: Number(inputs.weaponPart),
-                    metalPlate: Number(inputs.metalPlate),
-                    pipe: Number(inputs.pipe),
-                    spring: Number(inputs.spring),
-                    nutsAndBolts: Number(inputs.nutsAndBolts)
-                };
+        let isValid = true;
 
-                const { totalScrap, totalMetalFrags } = processInputs(numericValues);
-                displayTotals(totalScrap, totalMetalFrags);
+        Object.values(numericValues).forEach(value => {
+            if (isNaN(value) || value < 0) {
+                isValid = false;
             }
         });
+
+        if (!isValid) {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+        
+            const { totalScrap, totalMetalFrags } = processInputs(numericValues);
+            displayTotals(totalScrap, totalMetalFrags);
+        }
+    });
     </script>
 </body>
 </html>
