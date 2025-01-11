@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             height: 100vh;
             margin: 0;
         }
+
         .container {
             background: #334155;
             padding: 20px;
@@ -23,18 +25,22 @@
             max-width: 450px;
             width: 100%;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .input-group {
             margin-bottom: 15px;
         }
+
         .input-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         .input-group input {
             width: 100%;
             padding: 10px;
@@ -43,13 +49,16 @@
             outline: none;
             font-size: 1rem;
         }
+
         .input-group input:focus {
             box-shadow: 0 0 5px #3b82f6;
         }
+
         .button-container {
             text-align: center;
             margin-top: 20px;
         }
+
         .button-container button {
             background: #3b82f6;
             color: #f1f5f9;
@@ -60,9 +69,11 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
+
         .button-container button:hover {
             background: #2563eb;
         }
+
         .error-message {
             text-align: center;
             color: #ff6b6b;
@@ -70,6 +81,7 @@
             font-weight: bold;
             display: none;
         }
+
         .totals {
             margin-top: 20px;
             text-align: center;
@@ -78,6 +90,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Scrap Calculator</h1>
@@ -105,7 +118,7 @@
             <button id="calculate">Calculate</button>
         </div>
         <div class="error-message" id="error-message">Invalid input. Please enter valid numeric values.</div>
-        
+
         <div class="totals" id="totals">
             <p>Scrap: 0</p>
             <p>Metal Fragments: 0</p>
@@ -171,43 +184,44 @@
             `;
         }
 
-        document.getElementById('calculate').addEventListener('click', function() {
-        const inputs = {
-            weaponPart: document.getElementById('weapon-part').value.trim(),
-            metalPlate: document.getElementById('metal-plate').value.trim(),
-            pipe: document.getElementById('pipe').value.trim(),
-            spring: document.getElementById('spring').value.trim(),
-            nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
-        };
+        document.getElementById('calculate').addEventListener('click', function () {
+            const inputs = {
+                weaponPart: document.getElementById('weapon-part').value.trim(),
+                metalPlate: document.getElementById('metal-plate').value.trim(),
+                pipe: document.getElementById('pipe').value.trim(),
+                spring: document.getElementById('spring').value.trim(),
+                nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
+            };
 
-        const errorMessage = document.getElementById('error-message');
+            const errorMessage = document.getElementById('error-message');
 
-        // Convert empty inputs to 0 and check for invalid values
-        const numericValues = {
-            weaponPart: inputs.weaponPart === "" ? 0 : Number(inputs.weaponPart),
-            metalPlate: inputs.metalPlate === "" ? 0 : Number(inputs.metalPlate),
-            pipe: inputs.pipe === "" ? 0 : Number(inputs.pipe),
-            spring: inputs.spring === "" ? 0 : Number(inputs.spring),
-            nutsAndBolts: inputs.nutsAndBolts === "" ? 0 : Number(inputs.nutsAndBolts)
-        };
+            // Convert empty inputs to 0 and check for invalid values
+            const numericValues = {
+                weaponPart: inputs.weaponPart === "" ? 0 : Number(inputs.weaponPart),
+                metalPlate: inputs.metalPlate === "" ? 0 : Number(inputs.metalPlate),
+                pipe: inputs.pipe === "" ? 0 : Number(inputs.pipe),
+                spring: inputs.spring === "" ? 0 : Number(inputs.spring),
+                nutsAndBolts: inputs.nutsAndBolts === "" ? 0 : Number(inputs.nutsAndBolts)
+            };
 
-        let isValid = true;
+            let isValid = true;
 
-        Object.values(numericValues).forEach(value => {
-            if (isNaN(value) || value < 0) {
-                isValid = false;
+            Object.values(numericValues).forEach(value => {
+                if (isNaN(value) || value < 0) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+
+                const { totalScrap, totalMetalFrags } = processInputs(numericValues);
+                displayTotals(totalScrap, totalMetalFrags);
             }
         });
-
-        if (!isValid) {
-            errorMessage.style.display = 'block';
-        } else {
-            errorMessage.style.display = 'none';
-        
-            const { totalScrap, totalMetalFrags } = processInputs(numericValues);
-            displayTotals(totalScrap, totalMetalFrags);
-        }
-    });
     </script>
 </body>
+
 </html>
