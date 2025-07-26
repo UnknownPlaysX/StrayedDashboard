@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strayed VR Scrap Calculator</title>
+  <title>Scrap Calculator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
-    /* Global Reset */
+    :root {
+      --bg: radial-gradient(ellipse at top, #1e1b3a 0%, #0f0c29 100%);
+      --text-color: #f1f5f9;
+      --input-bg: rgba(255, 255, 255, 0.08);
+      --label-color: #cbd5e1;
+      --box-shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    body.light {
+      --bg: #f4f4f9;
+      --text-color: #1e1e1e;
+      --input-bg: rgba(0, 0, 0, 0.05);
+      --label-color: #333;
+      --box-shadow: rgba(0, 0, 0, 0.1);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,87 +32,87 @@
     }
 
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #f8fafc;
+      font-family: 'Orbitron', sans-serif;
+      background: var(--bg);
+      color: var(--text-color);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      transition: background 0.5s ease, color 0.5s ease;
     }
 
     .container {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 30px;
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 35px;
       width: 100%;
-      max-width: 500px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      max-width: 520px;
+      box-shadow: 0 10px 35px var(--box-shadow);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .container:hover {
-      transform: translateY(-5px);
+      transition: all 0.4s ease;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
-      color: #ffffff;
-      letter-spacing: 1px;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: inherit;
+      letter-spacing: 2px;
     }
 
     .input-group {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .input-group label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: 600;
-      color: #d1d5db;
+      color: var(--label-color);
+      letter-spacing: 0.5px;
     }
 
     .input-group input {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
+      padding: 12px 16px;
+      border-radius: 10px;
       border: none;
       outline: none;
       font-size: 1rem;
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
+      background: var(--input-bg);
+      color: inherit;
       transition: box-shadow 0.3s ease;
     }
 
     .input-group input:focus {
-      box-shadow: 0 0 8px #60a5fa;
+      box-shadow: 0 0 10px #60a5fa;
     }
 
     .button-container {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 25px;
     }
 
     .button-container button {
-      background: #3b82f6;
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
       color: white;
-      padding: 12px 30px;
+      padding: 14px 36px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 1rem;
       cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s ease, transform 0.2s ease;
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+      transition: all 0.3s ease;
     }
 
     .button-container button:hover {
-      background: #2563eb;
-      transform: scale(1.03);
+      transform: scale(1.05);
+      box-shadow: 0 0 16px rgba(96, 165, 250, 0.8);
     }
 
     .error-message {
@@ -106,22 +124,27 @@
     }
 
     .totals {
-      margin-top: 25px;
+      margin-top: 30px;
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
 
     .totals p {
-      margin: 6px 0;
+      margin: 10px 0;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: fadeInPop 0.5s forwards;
     }
 
-    @media (max-width: 500px) {
-      .container {
-        padding: 20px;
-      }
+    .totals p i {
+      margin-right: 8px;
+      color: #60a5fa;
+    }
 
-      h1 {
-        font-size: 1.5rem;
+    @keyframes fadeInPop {
+      to {
+        opacity: 1;
+        transform: scale(1);
       }
     }
   </style>
@@ -157,7 +180,7 @@
     </div>
 
     <div class="button-container">
-      <button id="calculate">Calculate</button>
+      <button id="calculate"><i class="fas fa-calculator"></i> Calculate</button>
     </div>
 
     <div class="error-message" id="error-message">
@@ -165,12 +188,23 @@
     </div>
 
     <div class="totals" id="totals">
-      <p>Scrap: 0</p>
-      <p>Metal Fragments: 0</p>
+      <p><i class="fas fa-cog"></i>Scrap: 0</p>
+      <p><i class="fas fa-wrench"></i>Metal Fragments: 0</p>
     </div>
   </div>
 
   <script>
+    // Theme sync via postMessage
+    window.addEventListener('message', (event) => {
+      if (event.data === 'dark') {
+        document.body.classList.add('dark');
+        document.body.classList.remove('light');
+      } else if (event.data === 'light') {
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+      }
+    });
+
     function processWeaponPart(value) {
       return { scrap: 30 * value, metal_frags: 45 * value };
     }
@@ -208,9 +242,10 @@
     }
 
     function displayTotals(scrap, metalFrags) {
-      document.getElementById('totals').innerHTML = `
-        <p>Scrap: ${scrap}</p>
-        <p>Metal Fragments: ${metalFrags}</p>
+      const totals = document.getElementById('totals');
+      totals.innerHTML = `
+        <p><i class="fas fa-cog"></i>Scrap: ${scrap}</p>
+        <p><i class="fas fa-wrench"></i>Metal Fragments: ${metalFrags}</p>
       `;
     }
 
@@ -248,5 +283,4 @@
     });
   </script>
 </body>
-
 </html>
