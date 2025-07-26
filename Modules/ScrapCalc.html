@@ -2,226 +2,251 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strayed VR Scrap Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #090a0c, #f63b3b);
-            color: #f1f5f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strayed VR Scrap Calculator</title>
+  <style>
+    /* Global Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .container {
-            background: #334155;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            max-width: 450px;
-            width: 100%;
-        }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+    }
 
-        .input-group {
-            margin-bottom: 15px;
-        }
+    .container:hover {
+      transform: translateY(-5px);
+    }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
 
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            outline: none;
-            font-size: 1rem;
-        }
+    .input-group {
+      margin-bottom: 18px;
+    }
 
-        .input-group input:focus {
-            box-shadow: 0 0 5px #3b82f6;
-        }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #d1d5db;
+    }
 
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      transition: box-shadow 0.3s ease;
+    }
 
-        .button-container button {
-            background: #3b82f6;
-            color: #f1f5f9;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    .input-group input:focus {
+      box-shadow: 0 0 8px #60a5fa;
+    }
 
-        .button-container button:hover {
-            background: #2563eb;
-        }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
 
-        .error-message {
-            text-align: center;
-            color: #ff6b6b;
-            margin-top: 10px;
-            font-weight: bold;
-            display: none;
-        }
+    .button-container button {
+      background: #3b82f6;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
 
-        .totals {
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-    </style>
+    .button-container button:hover {
+      background: #2563eb;
+      transform: scale(1.03);
+    }
+
+    .error-message {
+      text-align: center;
+      color: #f87171;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .totals {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .totals p {
+      margin: 6px 0;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Scrap Calculator</h1>
-        <div class="input-group">
-            <label for="weapon-part">Weapon Part</label>
-            <input type="text" id="weapon-part" name="weapon-part" placeholder="Enter amount of Weapon Parts">
-        </div>
-        <div class="input-group">
-            <label for="metal-plate">Metal Plate</label>
-            <input type="text" id="metal-plate" name="metal-plate" placeholder="Enter amount of Metal Plates">
-        </div>
-        <div class="input-group">
-            <label for="pipe">Pipe</label>
-            <input type="text" id="pipe" name="pipe" placeholder="Enter amount of Pipes">
-        </div>
-        <div class="input-group">
-            <label for="spring">Spring</label>
-            <input type="text" id="spring" name="spring" placeholder="Enter amount of Springs">
-        </div>
-        <div class="input-group">
-            <label for="nuts-bolts">Nuts And Bolts</label>
-            <input type="text" id="nuts-bolts" name="nuts-bolts" placeholder="Enter amount of Nuts And Bolts">
-        </div>
-        <div class="button-container">
-            <button id="calculate">Calculate</button>
-        </div>
-        <div class="error-message" id="error-message">Invalid input. Please enter valid numeric values.</div>
+  <div class="container">
+    <h1>Scrap Calculator</h1>
 
-        <div class="totals" id="totals">
-            <p>Scrap: 0</p>
-            <p>Metal Fragments: 0</p>
-        </div>
+    <div class="input-group">
+      <label for="weapon-part">Weapon Part</label>
+      <input type="text" id="weapon-part" placeholder="Enter amount of Weapon Parts" />
     </div>
 
-    <script>
-        function processWeaponPart(value) {
-            const scrap = 30 * value;
-            const metal_frags = 45 * value;
-            return { scrap, metal_frags };
+    <div class="input-group">
+      <label for="metal-plate">Metal Plate</label>
+      <input type="text" id="metal-plate" placeholder="Enter amount of Metal Plates" />
+    </div>
+
+    <div class="input-group">
+      <label for="pipe">Pipe</label>
+      <input type="text" id="pipe" placeholder="Enter amount of Pipes" />
+    </div>
+
+    <div class="input-group">
+      <label for="spring">Spring</label>
+      <input type="text" id="spring" placeholder="Enter amount of Springs" />
+    </div>
+
+    <div class="input-group">
+      <label for="nuts-bolts">Nuts And Bolts</label>
+      <input type="text" id="nuts-bolts" placeholder="Enter amount of Nuts And Bolts" />
+    </div>
+
+    <div class="button-container">
+      <button id="calculate">Calculate</button>
+    </div>
+
+    <div class="error-message" id="error-message">
+      Invalid input. Please enter valid numeric values.
+    </div>
+
+    <div class="totals" id="totals">
+      <p>Scrap: 0</p>
+      <p>Metal Fragments: 0</p>
+    </div>
+  </div>
+
+  <script>
+    function processWeaponPart(value) {
+      return { scrap: 30 * value, metal_frags: 45 * value };
+    }
+
+    function processMetalPlate(value) {
+      return { scrap: 5 * value, metal_frags: 75 * value };
+    }
+
+    function processPipe(value) {
+      return { scrap: 5 * value, metal_frags: 15 * value };
+    }
+
+    function processSpring(value) {
+      return { scrap: 15 * value, metal_frags: 15 * value };
+    }
+
+    function processNutsAndBolts(value) {
+      return { scrap: 5 * value, metal_frags: 10 * value };
+    }
+
+    function processInputs(values) {
+      const processors = [
+        processWeaponPart(values.weaponPart),
+        processMetalPlate(values.metalPlate),
+        processPipe(values.pipe),
+        processSpring(values.spring),
+        processNutsAndBolts(values.nutsAndBolts)
+      ];
+
+      return processors.reduce((acc, val) => {
+        acc.totalScrap += val.scrap;
+        acc.totalMetalFrags += val.metal_frags;
+        return acc;
+      }, { totalScrap: 0, totalMetalFrags: 0 });
+    }
+
+    function displayTotals(scrap, metalFrags) {
+      document.getElementById('totals').innerHTML = `
+        <p>Scrap: ${scrap}</p>
+        <p>Metal Fragments: ${metalFrags}</p>
+      `;
+    }
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const inputs = {
+        weaponPart: document.getElementById('weapon-part').value.trim(),
+        metalPlate: document.getElementById('metal-plate').value.trim(),
+        pipe: document.getElementById('pipe').value.trim(),
+        spring: document.getElementById('spring').value.trim(),
+        nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
+      };
+
+      const numericValues = {};
+      let isValid = true;
+
+      for (let key in inputs) {
+        let val = inputs[key] === "" ? 0 : Number(inputs[key]);
+        if (isNaN(val) || val < 0) {
+          isValid = false;
+          break;
         }
+        numericValues[key] = val;
+      }
 
-        function processMetalPlate(value) {
-            const scrap = 5 * value;
-            const metal_frags = 75 * value;
-            return { scrap, metal_frags };
-        }
+      const errorMessage = document.getElementById('error-message');
+      if (!isValid) {
+        errorMessage.style.display = 'block';
+        return;
+      }
 
-        function processPipe(value) {
-            const scrap = 5 * value;
-            const metal_frags = 15 * value;
-            return { scrap, metal_frags };
-        }
+      errorMessage.style.display = 'none';
 
-        function processSpring(value) {
-            const scrap = 15 * value;
-            const metal_frags = 15 * value;
-            return { scrap, metal_frags };
-        }
-
-        function processNutsAndBolts(value) {
-            const scrap = 5 * value;
-            const metal_frags = 10 * value;
-            return { scrap, metal_frags };
-        }
-
-        function processInputs(values) {
-            let totalScrap = 0;
-            let totalMetalFrags = 0;
-
-            const results = [
-                processWeaponPart(values.weaponPart),
-                processMetalPlate(values.metalPlate),
-                processPipe(values.pipe),
-                processSpring(values.spring),
-                processNutsAndBolts(values.nutsAndBolts)
-            ];
-
-            results.forEach(result => {
-                totalScrap += result.scrap;
-                totalMetalFrags += result.metal_frags;
-            });
-
-            return { totalScrap, totalMetalFrags };
-        }
-
-        function displayTotals(scrap, metalFrags) {
-            const totalsElement = document.getElementById('totals');
-            totalsElement.innerHTML = `
-                <p>Scrap: ${scrap}</p>
-                <p>Metal Fragments: ${metalFrags}</p>
-            `;
-        }
-
-        document.getElementById('calculate').addEventListener('click', function () {
-            const inputs = {
-                weaponPart: document.getElementById('weapon-part').value.trim(),
-                metalPlate: document.getElementById('metal-plate').value.trim(),
-                pipe: document.getElementById('pipe').value.trim(),
-                spring: document.getElementById('spring').value.trim(),
-                nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
-            };
-
-            const errorMessage = document.getElementById('error-message');
-
-            // Convert empty inputs to 0 and check for invalid values
-            const numericValues = {
-                weaponPart: inputs.weaponPart === "" ? 0 : Number(inputs.weaponPart),
-                metalPlate: inputs.metalPlate === "" ? 0 : Number(inputs.metalPlate),
-                pipe: inputs.pipe === "" ? 0 : Number(inputs.pipe),
-                spring: inputs.spring === "" ? 0 : Number(inputs.spring),
-                nutsAndBolts: inputs.nutsAndBolts === "" ? 0 : Number(inputs.nutsAndBolts)
-            };
-
-            let isValid = true;
-
-            Object.values(numericValues).forEach(value => {
-                if (isNaN(value) || value < 0) {
-                    isValid = false;
-                }
-            });
-
-            if (!isValid) {
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
-
-                const { totalScrap, totalMetalFrags } = processInputs(numericValues);
-                displayTotals(totalScrap, totalMetalFrags);
-            }
-        });
-    </script>
+      const { totalScrap, totalMetalFrags } = processInputs(numericValues);
+      displayTotals(totalScrap, totalMetalFrags);
+    });
+  </script>
 </body>
 
 </html>
