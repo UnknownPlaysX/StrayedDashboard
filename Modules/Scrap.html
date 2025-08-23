@@ -190,6 +190,7 @@
     <div class="totals" id="totals">
       <p><i class="fas fa-cog"></i>Scrap: 0</p>
       <p><i class="fas fa-wrench"></i>Metal Fragments: 0</p>
+      <p><i class="fas fa-gem"></i>Refined Metal: 0</p>
     </div>
   </div>
 
@@ -206,11 +207,11 @@
     });
 
     function processWeaponPart(value) {
-    return { scrap: 30 * value, metal_frags: 45 * value, refined: 0 };
+    return { scrap: 30 * value, metal_frags: 45 * value, refined: 2 };
   }
 
   function processMetalPlate(value) {
-    return { scrap: 5 * value, metal_frags: 75 * value, refined: 0 };
+    return { scrap: 5 * value, metal_frags: 75 * value, refined: 2 };
   }
 
   function processPipe(value) {
@@ -218,7 +219,7 @@
   }
 
   function processSpring(value) {
-    return { scrap: 15 * value, metal_frags: 15 * value, refined: 0 };
+    return { scrap: 15 * value, metal_frags: 15 * value, refined: 1 };
   }
 
   function processNutsAndBolts(value) {
