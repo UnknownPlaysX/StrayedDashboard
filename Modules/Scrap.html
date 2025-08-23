@@ -206,81 +206,83 @@
     });
 
     function processWeaponPart(value) {
-      return { scrap: 30 * value, metal_frags: 45 * value };
-    }
+    return { scrap: 30 * value, metal_frags: 45 * value, refined: 0 };
+  }
 
-    function processMetalPlate(value) {
-      return { scrap: 5 * value, metal_frags: 75 * value };
-    }
+  function processMetalPlate(value) {
+    return { scrap: 5 * value, metal_frags: 75 * value, refined: 0 };
+  }
 
-    function processPipe(value) {
-      return { scrap: 5 * value, metal_frags: 15 * value };
-    }
+  function processPipe(value) {
+    return { scrap: 5 * value, metal_frags: 15 * value, refined: 0 };
+  }
 
-    function processSpring(value) {
-      return { scrap: 15 * value, metal_frags: 15 * value };
-    }
+  function processSpring(value) {
+    return { scrap: 15 * value, metal_frags: 15 * value, refined: 0 };
+  }
 
-    function processNutsAndBolts(value) {
-      return { scrap: 5 * value, metal_frags: 10 * value };
-    }
+  function processNutsAndBolts(value) {
+    return { scrap: 5 * value, metal_frags: 10 * value, refined: 0 };
+  }
 
-    function processInputs(values) {
-      const processors = [
-        processWeaponPart(values.weaponPart),
-        processMetalPlate(values.metalPlate),
-        processPipe(values.pipe),
-        processSpring(values.spring),
-        processNutsAndBolts(values.nutsAndBolts)
-      ];
+  function processInputs(values) {
+    const processors = [
+      processWeaponPart(values.weaponPart),
+      processMetalPlate(values.metalPlate),
+      processPipe(values.pipe),
+      processSpring(values.spring),
+      processNutsAndBolts(values.nutsAndBolts)
+    ];
 
-      return processors.reduce((acc, val) => {
-        acc.totalScrap += val.scrap;
-        acc.totalMetalFrags += val.metal_frags;
-        return acc;
-      }, { totalScrap: 0, totalMetalFrags: 0 });
-    }
+    return processors.reduce((acc, val) => {
+      acc.totalScrap += val.scrap;
+      acc.totalMetalFrags += val.metal_frags;
+      acc.totalRefined += val.refined;
+      return acc;
+    }, { totalScrap: 0, totalMetalFrags: 0, totalRefined: 0 });
+  }
 
-    function displayTotals(scrap, metalFrags) {
-      const totals = document.getElementById('totals');
-      totals.innerHTML = `
-        <p><i class="fas fa-cog"></i>Scrap: ${scrap}</p>
-        <p><i class="fas fa-wrench"></i>Metal Fragments: ${metalFrags}</p>
-      `;
-    }
+  function displayTotals(scrap, metalFrags, refined) {
+    const totals = document.getElementById('totals');
+    totals.innerHTML = `
+      <p><i class="fas fa-cog"></i>Scrap: ${scrap}</p>
+      <p><i class="fas fa-wrench"></i>Metal Fragments: ${metalFrags}</p>
+      <p><i class="fas fa-gem"></i>Refined Metal: ${refined}</p>
+    `;
+  }
 
-    document.getElementById('calculate').addEventListener('click', () => {
-      const inputs = {
-        weaponPart: document.getElementById('weapon-part').value.trim(),
-        metalPlate: document.getElementById('metal-plate').value.trim(),
-        pipe: document.getElementById('pipe').value.trim(),
-        spring: document.getElementById('spring').value.trim(),
-        nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
-      };
+  document.getElementById('calculate').addEventListener('click', () => {
+    const inputs = {
+      weaponPart: document.getElementById('weapon-part').value.trim(),
+      metalPlate: document.getElementById('metal-plate').value.trim(),
+      pipe: document.getElementById('pipe').value.trim(),
+      spring: document.getElementById('spring').value.trim(),
+      nutsAndBolts: document.getElementById('nuts-bolts').value.trim()
+    };
 
-      const numericValues = {};
-      let isValid = true;
+    const numericValues = {};
+    let isValid = true;
 
-      for (let key in inputs) {
-        let val = inputs[key] === "" ? 0 : Number(inputs[key]);
-        if (isNaN(val) || val < 0) {
-          isValid = false;
-          break;
-        }
-        numericValues[key] = val;
+    for (let key in inputs) {
+      let val = inputs[key] === "" ? 0 : Number(inputs[key]);
+      if (isNaN(val) || val < 0) {
+        isValid = false;
+        break;
       }
+      numericValues[key] = val;
+    }
 
-      const errorMessage = document.getElementById('error-message');
-      if (!isValid) {
-        errorMessage.style.display = 'block';
-        return;
-      }
+    const errorMessage = document.getElementById('error-message');
+    if (!isValid) {
+      errorMessage.style.display = 'block';
+      return;
+    }
 
-      errorMessage.style.display = 'none';
+    errorMessage.style.display = 'none';
 
-      const { totalScrap, totalMetalFrags } = processInputs(numericValues);
-      displayTotals(totalScrap, totalMetalFrags);
-    });
+    const { totalScrap, totalMetalFrags, totalRefined } = processInputs(numericValues);
+    displayTotals(totalScrap, totalMetalFrags, totalRefined);
+  });
   </script>
 </body>
 </html>
